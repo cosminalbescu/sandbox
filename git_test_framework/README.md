@@ -54,7 +54,6 @@ git_test_framework/
 │── tests/
 │   ├── test_git.py           # Test cases for Git functionality
 │── git_utils.py               # Helper functions for running Git commands
-│── requirements.txt           # Dependencies (pytest)
 │── README.md                  # Documentation
 ```
 
