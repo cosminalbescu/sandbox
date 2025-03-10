@@ -1,17 +1,19 @@
 import subprocess
+import shutil
+import os
 from typing import Tuple
 
 
-def run_git_command(command: list, repo_path: str = None) -> Tuple[int, str, str]:
+def run_git_command(command: list, repo_path: str = None) -> tuple:
     """
-    Runs a Git command using subprocess and returns the exit code, stdout, and stderr.
+    Executes a Git command using subprocess.
 
     Args:
-        command (list): The Git command to execute as a list (e.g., ['commit', '-m', 'message']).
-        repo_path (str, optional): Path to the Git repository. If None, runs in the current directory.
+        command (list): Git command as a list (e.g., ['commit', '-m', 'message']).
+        repo_path (str, optional): Path to repository. Defaults to None.
 
     Returns:
-        Tuple[int, str, str]: A tuple containing (exit_code, stdout, stderr).
+        Tuple[int, str, str]: (exit_code, stdout, stderr)
     """
     full_command = ['git'] + command
     try:
@@ -27,28 +29,64 @@ def run_git_command(command: list, repo_path: str = None) -> Tuple[int, str, str
         return 1, '', str(e)
 
 
-def initialize_repo(repo_path: str) -> Tuple[int, str, str]:
-    """Initializes a new Git repository in the given path."""
-    return run_git_command(['init'], repo_path)
+def delete_existing_repo(path: str):
+    """Deletes the given directory if it exists."""
+    if os.path.exists(path):
+        shutil.rmtree(path)
 
 
-def clone_repo(repo_url: str, destination_path: str) -> Tuple[int, str, str]:
-    """Clones a Git repository from a remote URL to a local path."""
-    return run_git_command(['clone', repo_url, destination_path])
+def clone_repo(repo_url: str, clone_path: str):
+    """Clones the given Git repository to the specified path."""
+    exit_code, stdout, stderr = run_git_command(["clone", repo_url, clone_path])
+    assert exit_code == 0, f"Git clone failed: {stderr}"
 
 
-def create_commit(repo_path: str, message: str) -> Tuple[int, str, str]:
-    """
-    Creates a new commit in the repository (assumes that there are staged changes).
-    """
-    return run_git_command(['commit', '-m', message], repo_path)
+def create_branch(repo_path: str, branch_name: str):
+    """Creates and switches to a new branch."""
+    exit_code, stdout, stderr = run_git_command(["checkout", "-b", branch_name], repo_path)
+    assert exit_code == 0, f"Creating branch failed: {stderr}"
 
 
-def push_changes(repo_path: str, remote: str = 'origin', branch: str = 'main') -> Tuple[int, str, str]:
-    """Pushes committed changes to the remote repository."""
-    return run_git_command(['push', remote, branch], repo_path)
+def checkout_branch(repo_path: str, branch_name: str):
+    """Checks out the specified branch."""
+    exit_code, stdout, stderr = run_git_command(["checkout", branch_name], repo_path)
+    assert exit_code == 0, f"Checkout failed: {stderr}"
 
 
-def pull_changes(repo_path: str, remote: str = 'origin', branch: str = 'main') -> Tuple[int, str, str]:
-    """Pulls the latest changes from the remote repository."""
-    return run_git_command(['pull', remote, branch], repo_path)
+def add_file(repo_path: str, file_name: str, content: str):
+    """Creates and stages a file."""
+    file_path = os.path.join(repo_path, file_name)
+    with open(file_path, "w") as f:
+        f.write(content)
+    exit_code, stdout, stderr = run_git_command(["add", file_name], repo_path)
+    assert exit_code == 0, f"Git add failed: {stderr}"
+
+
+def commit_changes(repo_path: str, message: str):
+    """Commits staged changes with the specified message."""
+    exit_code, stdout, stderr = run_git_command(["commit", "-m", message], repo_path)
+    assert exit_code == 0, f"Git commit failed: {stderr}"
+
+
+def push_branch(repo_path: str, remote: str, branch_name: str):
+    """Pushes the branch to the remote repository."""
+    exit_code, stdout, stderr = run_git_command(["push", remote, branch_name], repo_path)
+    assert exit_code == 0, f"Git push failed: {stderr}"
+
+
+def merge_branch(repo_path: str, branch_name: str):
+    """Merges a branch into the currently active branch."""
+    exit_code, stdout, stderr = run_git_command(["merge", branch_name], repo_path)
+    assert exit_code == 0, f"Git merge failed: {stderr}"
+
+
+def pull_branch(repo_path: str, remote: str, branch_name: str):
+    """Pulls the latest changes from a remote branch."""
+    exit_code, stdout, stderr = run_git_command(["pull", remote, branch_name], repo_path)
+    assert exit_code == 0, f"Git pull failed: {stderr}"
+
+
+def delete_branch_remote(repo_path: str, remote: str, branch_name: str):
+    """Deletes the specified remote branch."""
+    exit_code, stdout, stderr = run_git_command(["push", remote, "--delete", branch_name], repo_path)
+    assert exit_code == 0, f"Deleting remote branch failed: {stderr}"
