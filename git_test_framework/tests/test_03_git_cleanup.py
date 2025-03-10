@@ -1,4 +1,3 @@
-import os
 from git_test_framework.git_utils import *
 
 REPO_URL = "git@github.com:cosminalbescu/test.git"
