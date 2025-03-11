@@ -112,11 +112,14 @@ This allows running a single test without executing the entire suite.
 ```
 git_test_framework/
 │── tests/
-│   ├── test_01_git.py            # Unit tests for Git functionality
+│   ├── test_01_git.py            # Tests for Git basic functionality
 │   ├── test_02_git_workflow.py   # Full Git workflow test (without cleanup)
 │   ├── test_03_git_cleanup.py    # Cleanup test (removes test artifacts)
-│── git_utils.py               # Helper functions for running Git commands
-│── README.md                  # Documentation
+│── git_utils.py                  # Helper functions for running Git commands
+│── docs/                         # Documentation directory
+│   ├── stage_2.md                # Stage 2 testing documentation
+│   ├── ci_cd.md                  # CI/CD testing documentation
+│── README.md                     # Project documentation
 ```
 
 ---
