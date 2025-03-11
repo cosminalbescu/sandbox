@@ -1,4 +1,4 @@
-## Phase 2: Advanced Git Testing
+## Phase 2: Advanced Git Testing 🙋🏻‍♂️
 
 ### Introduction
 

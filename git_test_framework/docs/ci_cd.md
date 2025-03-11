@@ -1,4 +1,4 @@
-## Continuous Integration & Deployment (CI/CD) for Git Testing
+## Continuous Integration & Deployment (CI/CD) for Git Testing 🖥️
 
 ### Introduction
 
@@ -17,6 +17,8 @@ To ensure the reliability, consistency, and automation of the tests, we need a w
   - `pytest`
   - `subprocess` module support
   - SSH client for secure authentication
+  - Docker (for containerized execution)
+  - Jenkins (Docker-based setup)
 
 ---
 

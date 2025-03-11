@@ -56,17 +56,18 @@ def test_git_pull():
 def test_git_cleanup():
     """Test cleanup by removing test files, branches and tmp directory."""
 
-    # Delete and re-clone fresh copy of repository
+    # Reset the local repository by deleting and re-cloning a fresh copy.
     delete_existing_repo(CLONE_PATH)
     clone_repo(REPO_URL, CLONE_PATH)
 
-    # Remove test files, commit and push changes
+    # Remove specific test files that were created in previous tests.
     files_to_delete = ["push_test.txt"]
     for file in files_to_delete:
         file_path = os.path.join(CLONE_PATH, file)
         if os.path.exists(file_path):
             os.remove(file_path)
 
+    # Mark deleted files in Git, create a commit with the changes, and push them to the remote repository.
     run_git_command(["add"] + files_to_delete, CLONE_PATH)
     commit_changes(CLONE_PATH, "Cleanup test files")
     push_branch(CLONE_PATH, "origin", "main")

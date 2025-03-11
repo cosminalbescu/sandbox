@@ -36,7 +36,7 @@ def delete_existing_repo(path: str):
 
 
 def clone_repo(repo_url: str, clone_path: str):
-    """Clones the given Git repository to the specified path."""
+    """Clones the given repo to the specified path."""
     exit_code, stdout, stderr = run_git_command(["clone", repo_url, clone_path])
     assert exit_code == 0, f"Git clone failed: {stderr}"
 
@@ -48,7 +48,7 @@ def create_branch(repo_path: str, branch_name: str):
 
 
 def checkout_branch(repo_path: str, branch_name: str):
-    """Checks out the specified branch."""
+    """Checkout the specified branch."""
     exit_code, stdout, stderr = run_git_command(["checkout", branch_name], repo_path)
     assert exit_code == 0, f"Checkout failed: {stderr}"
 

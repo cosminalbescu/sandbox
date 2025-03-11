@@ -26,15 +26,16 @@ def test_git_cleanup():
             os.remove(file_path)
             deleted_files.append(file_name)
 
+    # Step 3: Mark deleted files in Git, create a commit with the changes, and push them to the remote repository.
     if deleted_files:
         run_git_command(["add"] + deleted_files, CLONE_PATH)
         commit_changes(CLONE_PATH, "Cleanup test files")
         push_branch(CLONE_PATH, "origin", "main")
 
-    # Step 3: Delete remote branches
+    # Step 4: Delete remote branches
     branches_to_delete = ["feature-workflow"]
     for branch in branches_to_delete:
         delete_branch_remote(CLONE_PATH, "origin", branch)
 
-    # Step 4: Delete tmp directory entirely
+    # Step 5: Delete tmp directory entirely
     delete_existing_repo("tmp")

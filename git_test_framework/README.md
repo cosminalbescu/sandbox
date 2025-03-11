@@ -1,4 +1,4 @@
-# **Git Test Framework** 🚀
+# **Git Test Framework** 👨🏻‍💻
 
 This framework automates testing for basic Git functionality, including:
 - **Cloning a repository** (`git clone`)
@@ -23,7 +23,7 @@ python3 -m pytest tests/
 ```
 
 Test execution order:
-1. **test_01_git.py** (Unit tests for Git functionality)
+1. **test_01_git.py** (Tests for basic Git functionality)
 2. **test_02_git_workflow.py** (Workflow test: clone → commit → push → merge → pull)
 3. **test_03_git_cleanup.py** (Deletes test files and branches)
 
@@ -38,7 +38,7 @@ python3 -m pytest tests/ -v
 ## 🚀 **Running Individual Test Suites**
 The framework is modular. You can run specific tests:
 
-### 🔹 **Running Unit Tests (Basic Git Operations)**
+### 🔹 **Running Basic Git Functionality Tests**
 To test **individual Git commands** (clone, commit, push, merge), run:
 
 ```bash
@@ -111,14 +111,14 @@ This allows running a single test without executing the entire suite.
 ## 📂 **Project Structure**
 ```
 git_test_framework/
+│── docs/                         # Documentation directory
+│   ├── ci_cd.md                  # CI/CD testing documentation
+│   ├── stage_2.md                # Stage 2 testing documentation
 │── tests/
 │   ├── test_01_git.py            # Tests for Git basic functionality
 │   ├── test_02_git_workflow.py   # Full Git workflow test (without cleanup)
 │   ├── test_03_git_cleanup.py    # Cleanup test (removes test artifacts)
 │── git_utils.py                  # Helper functions for running Git commands
-│── docs/                         # Documentation directory
-│   ├── stage_2.md                # Stage 2 testing documentation
-│   ├── ci_cd.md                  # CI/CD testing documentation
 │── README.md                     # Project documentation
 ```
 
