@@ -2,6 +2,7 @@ import subprocess
 import shutil
 import os
 from typing import Tuple
+# this is called type hinting, it's used for other programmers
 
 
 def run_git_command(command: list, repo_path: str = None) -> tuple:
